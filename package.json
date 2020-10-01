@@ -1,0 +1,14 @@
+{
+  "name": "launch_control",
+  "version": "0.1.0",
+  "description": "Launch app/tasks easily",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^10.1.3"
+  }
+}
