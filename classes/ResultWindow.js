@@ -8,7 +8,6 @@ class ResultWindow {
   }
   update(results) {
     this.clear();
-
     results.forEach((result, key) => {
       this.create(result, key);
     });
@@ -19,13 +18,12 @@ class ResultWindow {
     ipcRenderer.send('resize', this.inputHeight);
   }
   focus(keyMatch) {
-    console.log(keyMatch);
     let nodes = this.element.children
     for(let i = 0; i < nodes.length; i++) {
       nodes[i].classList.remove('active');
-      console.log(nodes[i]);
-      console.log(i);
-      if(keyMatch && i === keyMatch) nodes[i].classList.add('active');
+      if(keyMatch != null && i === keyMatch) {
+        nodes[i].classList.add('active');
+      }
     }
   }
   create(result, key) {

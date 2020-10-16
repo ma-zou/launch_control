@@ -2,13 +2,17 @@ const { app, BrowserWindow, ipcMain, dialog, globalShortcut, Tray, Menu  } = req
 const { exec } = require('child_process');
 const path = require('path');
 
-const debug = true;
+const debug = false;
 
-let win, tray;
+let win, tray, configWin, windowSettings;
 
 ipcMain.on('resize', (event, height) => {
   if(!debug) win.setSize(500, height)
-})
+});
+
+ipcMain.on('settings_close', (event) => {
+  configWin.hide();
+});
 
 ipcMain.on('process_exec', (event, command, cwd) => {
   if(cwd) {
@@ -32,7 +36,7 @@ app.whenReady().then(() => {
   createWindow();
 
   globalShortcut.register('Alt+Space', () => {
-    win.setSize(500, 75)
+    if(!debug) win.setSize(500, 75)
     win.center()
     win.show();
     tray.destroy();
@@ -41,7 +45,8 @@ app.whenReady().then(() => {
 
 function createWindow () {
   // Erstelle das Browser-Fenster.
-  let windowSettings = {
+  windowSettings = {
+    allowEval: true,
     height: 100,
     width: 500,
     show: false,
@@ -73,16 +78,18 @@ function createWindow () {
   });
 
   win.on('restore', function (event) {
-    win.setSize(500, 75)
+    if(!debug) win.setSize(500, 75)
     win.center()
     win.show();
     tray.destroy();
   });
 
-  win.on('blur', (event) => {
-    win.hide();
-    tray = createTray();
-  })
+  if(!debug) {
+    win.on('blur', (event) => {
+      win.hide();
+      tray = createTray();
+    })
+  }
 }
 
 function createTray() {
@@ -96,6 +103,21 @@ function createTray() {
       }
     },
     {
+      label: 'Config', click: function () {
+        console.log('config');
+        if(configWin) {
+          configWin.show()
+        } else {
+          let configSettings = windowSettings;
+          configSettings.width = 800;
+          configSettings.height = 600;
+          configWin = new BrowserWindow(configSettings);
+          configWin.loadFile('settings.html')
+          configWin.show()
+        }
+      }
+    },
+    {
       label: 'Exit', click: function () {
         app.isQuiting = true;
         app.quit();
@@ -106,7 +128,7 @@ function createTray() {
   appIcon.on('double-click', function (event) {
       win.show();
   });
-  appIcon.setToolTip('Tray Tutorial');
+  appIcon.setToolTip('Launch Control');
   appIcon.setContextMenu(contextMenu);
   return appIcon;
 }
