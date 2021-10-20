@@ -1,6 +1,6 @@
 {
   "name": "launch_control_v2",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "description": "Spotlight for windows",
   "main": "index.js",
   "scripts": {

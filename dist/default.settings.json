@@ -1,5 +1,5 @@
 {
-    "version": "0.1.0",
+    "version": "2.1.0",
     "projectsDirectory": "[PATH TO YOUR PROJECTS DIRECTORY]",
     "modules": [
         "HelloWorld"

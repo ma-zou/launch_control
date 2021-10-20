@@ -50,7 +50,7 @@ interface Module {
 	icon: string;
 	version: string;
 	maxResults: bigint;
-  settings: Array<Setting>;
+    settings: Array<Setting>;
 	trigger: Array<Trigger>;
 
 	init() void;
