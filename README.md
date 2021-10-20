@@ -23,12 +23,12 @@ interface Setting {
 	type: string; // input type 'text', 'checkbox', 'number'
 	name: string; // name for the setting 
 	value: string; // value, empty for settings that have no value required from beginning
-	desciption: string; // desciption what the setting will do for the user
+	description: string; // description what the setting will do for the user
 }
 
 interface Trigger {
 	keyword: string; // a keyword to match
-	hasQuery: boolean; // wheather this trigger accepts an additional query
+	hasQuery: boolean; // whether this trigger accepts an additional query
 	callback: Function; // function that get called once the user selects the option and hits enter
 	hideKeyword: boolean; // once the keyword is matched it will only show the query 
 }
@@ -76,9 +76,7 @@ for module in modules:
 			results.push(module.getResult(trigger, query)
 			iterations++
 
-ipcRenderer.send(results)
-
-			
+ipcRenderer.send(results)			
 ```
 
 ## Settings
@@ -87,5 +85,10 @@ Split between general settings and module specific settings
 
 - Aliases for trigger
 - Modules
-    - permission
+    - permissions
+
+
+## Theming 
+
+Will come, probably based on css custom properties, but nothing more planned right now.
     
